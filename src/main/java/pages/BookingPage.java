@@ -15,12 +15,14 @@ public class BookingPage extends ProgressBarBlock {
     public String URL = "http://handandstone.bigdropinc.net/booking.html";
     public ProgressBarBlock barBlock = new ProgressBarBlock();
 
-    public BookingPage(){
-
+    public BookingPage(WebDriver driver){
+        super(driver);
     }
-
-    public String chooseMassageType{
-        
+   /* public String chooseMassageType(){
+        return String;
+    }*/
+    public String getUrl() {
+        return this.URL;
     }
 
 
