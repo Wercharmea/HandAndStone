@@ -48,6 +48,8 @@ public class ProgressBarBlock {
         }
         return actualTitle;
     }
+
+    /*
     public String getTitleOfProgressBarFistElement() {
         Wait wait = new FluentWait(driver)
                 .withTimeout(30, SECONDS)
@@ -58,13 +60,13 @@ public class ProgressBarBlock {
         WebElement progressBar1 = driver.findElement(By.xpath("//div[@class='step-area']//li[1]"));
         actualTitle = progressBar1.getAttribute("class");
 
-        /*for (int i = 0; i < progressBar.size(); i++) {
+        for (int i = 0; i < progressBar.size(); i++) {
             if (progressBar.get(i).getAttribute("class").equalsIgnoreCase("active") == true) {
                 actualTitle = progressBar.get(i).getAttribute("data-title");
             }
-        }*/
-        return actualTitle;
-    }
+        }
+        return actualTitle
+    } */
 
     public boolean verifyTitleOfProgressBar(){
 

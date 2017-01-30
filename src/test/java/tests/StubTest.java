@@ -21,12 +21,13 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class StubTest {
 
-   private WebDriver driver;
+    public WebDriver driver;
     private BookingPage bookingPage;
     @BeforeMethod(alwaysRun = true)
     public void setUp(){
-        bookingPage = new BookingPage(driver);
+
         driver = new ChromeDriver();
+        bookingPage = new BookingPage(driver);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, SECONDS);
         driver.get(bookingPage.getUrl());
@@ -35,9 +36,7 @@ public class StubTest {
     @Test
     public void test(){
 
-        /*System.out.print(bookingPage.verifyTitleOfProgressBar());*/
-        System.out.println(bookingPage.getTitleOfProgressBarFistElement());
-
+        System.out.print(bookingPage.verifyTitleOfProgressBar());
     }
 
     @AfterClass

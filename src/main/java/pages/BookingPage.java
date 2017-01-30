@@ -3,6 +3,7 @@ package pages;
 import blocks.ProgressBarBlock;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -11,16 +12,25 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class BookingPage extends ProgressBarBlock {
 
-    By servicesList = By.xpath("//*[contains(@class, 'service-content')]/ul");
+
     public String URL = "http://handandstone.bigdropinc.net/booking.html";
+    @FindBy (xpath = "//a[contains(.,'Book now')]")
+    public WebElement serviceType;
     public ProgressBarBlock barBlock = new ProgressBarBlock();
 
     public BookingPage(WebDriver driver){
         super(driver);
     }
-   /* public String chooseMassageType(){
-        return String;
-    }*/
+
+    public void chooseMassageType(){
+        float massagePrice;
+        
+        if (verifyTitleOfProgressBar() == true){
+            serviceType.click();
+        }
+
+
+    }
     public String getUrl() {
         return this.URL;
     }
