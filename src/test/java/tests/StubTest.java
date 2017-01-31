@@ -1,5 +1,6 @@
 package tests;
 
+import blocks.ProgressBarBlock;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -23,6 +24,8 @@ public class StubTest {
 
     public WebDriver driver;
     private BookingPage bookingPage;
+    private ProgressBarBlock barBlock;
+
     @BeforeMethod(alwaysRun = true)
     public void setUp(){
 
@@ -35,8 +38,8 @@ public class StubTest {
 
     @Test
     public void test(){
-
-        System.out.print(bookingPage.verifyTitleOfProgressBar());
+        System.out.println(bookingPage.verifyTitleOfProgressBar());
+        bookingPage.defineService();
     }
 
     @AfterClass
