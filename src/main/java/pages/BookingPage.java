@@ -17,20 +17,22 @@ public class BookingPage extends ProgressBarBlock {
 
 
     public String URL = "http://handandstone.bigdropinc.net/booking.html";
-    public By serviceListLocator = By.xpath("//div[contains(@class,'service-content')]//li");
-
+    public String serviceListLocator = "//div[contains(@class,'service-content')]//li";
     @FindBy (xpath = "//a[contains(.,'Book now')]")
-    public WebElement serviceType;
+    WebElement serviceType;
 
     public BookingPage(WebDriver driver){
         super(driver);
     }
 
-    public void chooseServiceType(){
-        String serviceTypeName = "";
+    public void chooseService(){
+        WebElement serviceItem = driver.findElement(By.xpath(defineService()));
+
         if (verifyTitleOfProgressBar() == true){
-            serviceType.click();
+            System.out.println("serviceItemNewXpath=" + serviceItem);
+           // serviceItem.click();
         }
+        else {System.out.print("Progress Bar title is not on first step");}
     }
 
     public static int randomInt(int Min, int Max){
@@ -42,16 +44,18 @@ public class BookingPage extends ProgressBarBlock {
 
     }
 
-    public String defineService(){
+    public String defineService(){ // finds random service from the Services List
 
-        List<WebElement> serviceList = driver.findElements(serviceListLocator);
+        List<WebElement> serviceList = driver.findElements(By.xpath(serviceListLocator));
         String serviceItem = (new StringBuilder())
                 .append(serviceListLocator.toString())
                 .append("[" + randomInt(1, serviceList.size()) + "]")
                 .toString();
-        System.out.println(serviceItem);
-        System.out.println(serviceList.size());
-        return serviceItem; //changed xpaths
+
+        //System.out.println(serviceItem);
+
+        //System.out.println(serviceList.size());
+        return serviceItem; //changed xpath
     }
 
 

@@ -38,8 +38,9 @@ public class StubTest {
 
     @Test
     public void test(){
-        System.out.println(bookingPage.verifyTitleOfProgressBar());
+        System.out.println("Is the title of Progress Bar right? - " + bookingPage.verifyTitleOfProgressBar());
         bookingPage.defineService();
+       // bookingPage.chooseService();
     }
 
     @AfterClass
