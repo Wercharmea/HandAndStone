@@ -3,7 +3,6 @@ package blocks;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -22,15 +21,13 @@ public class ProgressBarBlock {
     public static WebDriver driver;
     public By progressBarLocator = By.xpath("//div[@class='step-area']//li");
 
-    public static ProgressBarBlock barBlock = new ProgressBarBlock();
 
-
- //   @FindBy (xpath = "//li[contains(@class,'active')]")
+    //   @FindBy (xpath = "//li[contains(@class,'active')]")
 //    public WebElement firstStep;
     public ProgressBarBlock() {
 
 
-     }
+    }
 
     public String getTitleOfProgressBar() {
         Wait wait = new FluentWait(driver)
