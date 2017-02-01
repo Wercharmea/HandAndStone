@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Trello Suite" verbose="1" >
+    <parameter name="browser" value="firefox"/>
+    <test name="Trello">
+        <classes>
+            <class name="tests.Locations" />
+        </classes>
+    </test>
+</suite>
