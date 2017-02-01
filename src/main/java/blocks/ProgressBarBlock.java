@@ -3,17 +3,14 @@ package blocks;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
-import pages.BookingPage;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -27,10 +24,11 @@ public class ProgressBarBlock {
 
     public static ProgressBarBlock barBlock = new ProgressBarBlock();
 
-    @FindBy (xpath = "//li[contains(@class,'active')]")
+    @FindBy(xpath = "//li[contains(@class,'active')]")
     public WebElement firstStep;
+
     public ProgressBarBlock() {
-     }
+    }
 
     public String getTitleOfProgressBar() {
         Wait wait = new FluentWait(driver)
@@ -48,6 +46,7 @@ public class ProgressBarBlock {
         }
         return actualTitle;
     }
+
     public String getTitleOfProgressBarFistElement() {
         Wait wait = new FluentWait(driver)
                 .withTimeout(30, SECONDS)
@@ -66,13 +65,14 @@ public class ProgressBarBlock {
         return actualTitle;
     }
 
-    public boolean verifyTitleOfProgressBar(){
+    public boolean verifyTitleOfProgressBar() {
 
         String expectedResult = "Choose Services";
         return getTitleOfProgressBar().contains(expectedResult);
 
     }
-        public ProgressBarBlock (WebDriver driver){
+
+    public ProgressBarBlock(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
