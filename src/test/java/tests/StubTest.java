@@ -1,5 +1,6 @@
 package tests;
 
+import blocks.ProgressBarBlock;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -21,12 +22,15 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class StubTest {
 
-   private WebDriver driver;
+    public WebDriver driver;
     private BookingPage bookingPage;
+    private ProgressBarBlock barBlock;
+
     @BeforeMethod(alwaysRun = true)
     public void setUp(){
-        bookingPage = new BookingPage(driver);
+
         driver = new ChromeDriver();
+        bookingPage = new BookingPage(driver);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, SECONDS);
         driver.get(bookingPage.getUrl());
@@ -34,10 +38,9 @@ public class StubTest {
 
     @Test
     public void test(){
-
-        /*System.out.print(bookingPage.verifyTitleOfProgressBar());*/
-        System.out.println(bookingPage.getTitleOfProgressBarFistElement());
-
+        System.out.println("Is the title of Progress Bar right? - " + bookingPage.verifyTitleOfProgressBar());
+        bookingPage.defineService();
+       // bookingPage.chooseService();
     }
 
     @AfterClass

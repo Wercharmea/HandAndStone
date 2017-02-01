@@ -24,11 +24,13 @@ public class ProgressBarBlock {
 
     public static ProgressBarBlock barBlock = new ProgressBarBlock();
 
-    @FindBy(xpath = "//li[contains(@class,'active')]")
-    public WebElement firstStep;
 
+ //   @FindBy (xpath = "//li[contains(@class,'active')]")
+//    public WebElement firstStep;
     public ProgressBarBlock() {
-    }
+
+
+     }
 
     public String getTitleOfProgressBar() {
         Wait wait = new FluentWait(driver)
@@ -47,24 +49,6 @@ public class ProgressBarBlock {
         return actualTitle;
     }
 
-    public String getTitleOfProgressBarFistElement() {
-        Wait wait = new FluentWait(driver)
-                .withTimeout(30, SECONDS)
-                .pollingEvery(5, SECONDS)
-                .ignoring(NoSuchElementException.class);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(progressBarLocator));
-        String actualTitle = "";
-        WebElement progressBar1 = driver.findElement(By.xpath("//div[@class='step-area']//li[1]"));
-        actualTitle = progressBar1.getAttribute("class");
-
-        /*for (int i = 0; i < progressBar.size(); i++) {
-            if (progressBar.get(i).getAttribute("class").equalsIgnoreCase("active") == true) {
-                actualTitle = progressBar.get(i).getAttribute("data-title");
-            }
-        }*/
-        return actualTitle;
-    }
-
     public boolean verifyTitleOfProgressBar() {
 
         String expectedResult = "Choose Services";
@@ -77,12 +61,4 @@ public class ProgressBarBlock {
         PageFactory.initElements(driver, this);
     }
 
-
-   /* public static void main(String[] args){
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("http://handandstone.bigdropinc.net/booking.html");
-        System.out.print(barBlock.verifyTitleOfProgressBar());
-    }*/
 }
