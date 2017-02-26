@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -13,6 +14,7 @@ public class BasePage {
     protected WebDriver driver;
     protected JavascriptExecutor js;
     protected Wait fluentWait;
+    protected Actions move;
 
 
     public BasePage(WebDriver driver) {
@@ -23,5 +25,6 @@ public class BasePage {
                 .withTimeout(30, TimeUnit.SECONDS)
                 .pollingEvery(2, TimeUnit.SECONDS)
                 .ignoring(NoSuchElementException.class);
+        move = new Actions(driver);
     }
 }
