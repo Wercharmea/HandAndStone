@@ -14,13 +14,19 @@ public class StubTest extends BaseTest {
     public void setUp() {
         bookingPage = new BookingPage(driver);
         progressBarBlock = new ProgressBarBlock(driver);
-        driver.get(bookingPage.getUrl());
+
     }
 
     @Test
-    public void test() {
+    public void test() throws Exception {
+        driver.get(bookingPage.getUrl());
         System.out.println("Is the title of Progress Bar right? - " + progressBarBlock.verifyTitleOfProgressBar());
-        bookingPage.defineService();
+
+        bookingPage.setChosenService();
         bookingPage.chooseService();
+      //  bookingPage.defineService();
+      //  bookingPage.getServicePrice();
+      //  bookingPage.getServicePrice();
+      //  bookingPage.getServiceName();
     }
 }
