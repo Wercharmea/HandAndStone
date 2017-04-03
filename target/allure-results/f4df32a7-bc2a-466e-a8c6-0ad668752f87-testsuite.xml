@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:test-suite start="1490793583148" stop="1490793598900" xmlns:ns2="urn:model.allure.qatools.yandex.ru">
+    <name>Default Suite : HeadAndStone</name>
+    <title>Default Suite : HeadAndStone</title>
+    <test-cases>
+        <test-case start="1490793589990" stop="1490793597757" status="passed">
+            <name>test</name>
+            <steps/>
+            <attachments/>
+            <labels>
+                <label name="host" value="BIGDROP-PC75"/>
+                <label name="thread" value="8648@BIGDROP-PC75.main(1)"/>
+            </labels>
+        </test-case>
+    </test-cases>
+    <labels>
+        <label name="framework" value="TestNG"/>
+        <label name="language" value="JAVA"/>
+    </labels>
+</ns2:test-suite>

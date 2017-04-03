@@ -4,8 +4,7 @@ import blocks.ProgressBarBlock;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import ru.yandex.qatools.allure.annotations.Step;
+import java.util.Random;
 
 import java.util.List;
 
@@ -16,12 +15,12 @@ public class BookingPage extends BasePage {
 
 
     public String URL = "https://hs.bigdropinc.net/locations/2/booking";
-    public String serviceListLocator = "//div[contains(@class,'service-content')]//ul//li";
+    public String serviceListLocator = "//div[contains(@class,'service-content')]//ul//li//a[contains(.,'book now')]";
     private ProgressBarBlock progressBarBlock;
     private String chosenService;
 
     public void setChosenService() throws Exception {
-        this.chosenService = defineService();
+        this.chosenService = getRandomService().toString();
     }
 
     public String getChosenService() {
@@ -41,18 +40,23 @@ public class BookingPage extends BasePage {
         String massageLocator = "//ul[contains(@class,'services-list')]/li[1]";
         WebElement massageType = driver.findElement(By.xpath(massageLocator));
         massageType.click();
+        System.out.println("Procedure chosen");
     }
 
-    public void chooseService() throws Exception{ // TC #3 - Choose the type of massage in the massages list
+    public void chooseService() throws Exception { // TC #3 - Choose the type of massage in the massages list
 
         if (progressBarBlock.verifyTitleOfProgressBar() == true) { // TC #1 - Verify the title of Progress Bar active item
             chooseProcedure();
+            setChosenService();
+            getChosenService();
+            System.out.println("Random index and path is " + getChosenService());
+/*
             WebElement testItem = driver.findElement(By.xpath(getChosenService()+"//a[contains(@class,'btn-blue')]"));
             if (testItem.getText().equalsIgnoreCase("book now")){
 
                 WebElement serviceItem = driver.findElement(By.xpath(getChosenService() + "//a[contains(.,'book now')]"));
-                serviceItem.click();
-                getServiceName();
+                serviceItem.click();*/
+  /*              getServiceName();
 
                 if (serviceItem.getText().equalsIgnoreCase("selected")== true)  {
 
@@ -64,18 +68,25 @@ public class BookingPage extends BasePage {
             }
             else{
                 setChosenService();
-            }
-
-        } else {
-            System.out.print("Progress Bar title is not on first step");
-        }
+  */
+        } else System.out.print("Progress Bar title is not on first step");
     }
 
+  /*  private String getBtnName(){
+        WebElement test = driver.findElement(By.xpath(getChosenService() + "//a[contains(@class,'btn-blue')]"));
+        String s = test.getText().toString();
+        return s;
+    }
+
+    private boolean compareBtnTitle(){
+        return getBtnName().equalsIgnoreCase("book now");
+    }
+*/
     public static int randomInt(int Min, int Max) {
         return (int) (Math.random() * (Max - Min)) + Min;
     }
 
-    private String defineService() throws Exception { // finds random service from the Services List
+/*    private String defineService() throws Exception { // finds random service from the Services List
         String serviceItem;
         //if (isElementPresent(By.xpath(serviceListLocator))) {
             List<WebElement> serviceList = driver.findElements(By.xpath(serviceListLocator));
@@ -88,9 +99,9 @@ public class BookingPage extends BasePage {
             return serviceItem;
             // }
       //  else throw new Exception("service list not found");
-    }
+    }*/
 
-    public String getServiceName() { //gets name of chosen service
+    private String getServiceName() { //gets name of chosen service
         WebElement serviceNameLocator = driver.findElement(By.xpath(getChosenService() + "//h4"));
         String serviceName;
         serviceName = serviceNameLocator.getText();
@@ -98,14 +109,28 @@ public class BookingPage extends BasePage {
         return serviceName;
     }
 
-    public void getServicePrice() { // method to find and save initial price
+    private void getServicePrice() { // method to find and save initial price
         //TODO compare duration price >= servicePrice, compare endPrice with duration price
         WebElement sumLocator = driver.findElement(By.xpath(getChosenService() + "//div[contains(@data-price,'89.95')]"));
         String sumValue = sumLocator.toString();
         System.out.println(sumValue);
+
+    }
+   public WebElement getRandomService()
+    {
+        Random randomGenerator = new Random();
+        List<WebElement> serviceList = driver.findElements(By.xpath(serviceListLocator));
+        int index = randomGenerator.nextInt(serviceList.size()+1);
+       // WebElement serviceRandomItem = serviceList.get(index);
+        String s1 = "li".concat("[").concat(Integer.toString(index).concat("]"));
+        String s = serviceListLocator.replace("li",s1);
+        WebElement serviceRandomItem = driver.findElement(By.xpath(s));
+        return serviceRandomItem;
     }
 
-    public void getDuration(){ // TC#4 - Finds duration-list, choose duration, verifies price is bigger or equals to servicePrice
+
+
+    private void getDuration(){ // TC#4 - Finds duration-list, choose duration, verifies price is bigger or equals to servicePrice
         WebElement durationList = driver.findElement(By.cssSelector(".duration-list"));
     }
 }

@@ -22,10 +22,9 @@ public class StubTest extends BaseTest {
         driver.get(bookingPage.getUrl());
         System.out.println("Is the title of Progress Bar right? - " + progressBarBlock.verifyTitleOfProgressBar());
 
-        bookingPage.setChosenService();
-        bookingPage.chooseService();
+          bookingPage.chooseService();
+       //   bookingPage.setChosenService();
       //  bookingPage.defineService();
-      //  bookingPage.getServicePrice();
       //  bookingPage.getServicePrice();
       //  bookingPage.getServiceName();
     }
