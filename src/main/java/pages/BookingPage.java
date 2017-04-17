@@ -4,7 +4,7 @@ import blocks.ProgressBarBlock;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import java.util.List;
 
@@ -36,8 +36,17 @@ public class BookingPage extends BasePage {
         return this.URL;
     }
 
-    public void chooseProcedure(){ // TC#2 - Choose massage of facials
-        String massageLocator = "//ul[contains(@class,'services-list')]/li[1]";
+    public void chooseMassage() {
+        chooseProcedure(1);
+    }
+
+//    public void chooseFacials() {
+//        chooseProcedure(2);
+//    }
+
+    // TC#2 - Choose massage or facials
+    public void chooseProcedure(int numberOfProcedure){
+        String massageLocator = String.format("//ul[contains(@class,'services-list')]/li[%s]", numberOfProcedure);
         WebElement massageType = driver.findElement(By.xpath(massageLocator));
         massageType.click();
         System.out.println("Procedure chosen");
@@ -46,7 +55,7 @@ public class BookingPage extends BasePage {
     public void chooseService() throws Exception { // TC #3 - Choose the type of massage in the massages list
 
         if (progressBarBlock.verifyTitleOfProgressBar() == true) { // TC #1 - Verify the title of Progress Bar active item
-            chooseProcedure();
+            chooseMassage();
             setChosenService();
             getChosenService();
             System.out.println("Random index and path is " + getChosenService());
@@ -118,14 +127,10 @@ public class BookingPage extends BasePage {
     }
    public WebElement getRandomService()
     {
-        Random randomGenerator = new Random();
         List<WebElement> serviceList = driver.findElements(By.xpath(serviceListLocator));
-        int index = randomGenerator.nextInt(serviceList.size()+1);
-       // WebElement serviceRandomItem = serviceList.get(index);
-        String s1 = "li".concat("[").concat(Integer.toString(index).concat("]"));
-        String s = serviceListLocator.replace("li",s1);
-        WebElement serviceRandomItem = driver.findElement(By.xpath(s));
-        return serviceRandomItem;
+        int index = ThreadLocalRandom.current().nextInt(1, serviceList.size());
+        String randomServiceLocator = serviceListLocator.replace("li", String.format("li[%s]", index));
+        return driver.findElement(By.xpath(randomServiceLocator));
     }
 
 
