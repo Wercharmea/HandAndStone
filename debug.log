@@ -26,3 +26,9 @@
 [0202/103706:WARNING:in_range_cast.h(38)] value 2280825097682 out of range
 [0202/103706:WARNING:in_range_cast.h(38)] value 2280825098152 out of range
 [0202/103706:WARNING:in_range_cast.h(38)] value 108084205055182070 out of range
+[0614/111659.583:ERROR:process_info.cc(625)] range at 0xb80a2fbe00000000, size 0x1ed fully unreadable
+[0614/111659.585:ERROR:process_info.cc(625)] range at 0xb80a2fde00000000, size 0x1ed fully unreadable
+[0614/111659.585:ERROR:process_info.cc(625)] range at 0x0, size 0x1ed fully unreadable
+[0614/111659.617:ERROR:file_io_win.cc(145)] CreateFile C:\Users\bigdrop\AppData\Local\Temp\scoped_dir3700_6246\Crashpad\settings.dat: The system cannot find the path specified. (0x3)
+[0614/111659.618:ERROR:file_io_win.cc(154)] CreateFile C:\Users\bigdrop\AppData\Local\Temp\scoped_dir3700_6246\Crashpad\reports\2bfb74db-8cbd-4eec-aadf-aa90f9d05ec6.dmp: The system cannot find the path specified. (0x3)
+[0614/111659.618:ERROR:crash_report_exception_handler.cc(95)] PrepareNewCrashReport failed

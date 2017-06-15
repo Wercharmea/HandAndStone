@@ -1,11 +1,16 @@
 package pages;
 
 import blocks.ProgressBarBlock;
+import com.sun.xml.internal.bind.v2.TODO;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import java.util.concurrent.ThreadLocalRandom;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.List;
 
 /**
@@ -13,17 +18,21 @@ import java.util.List;
  */
 public class BookingPage extends BasePage {
 
-
+    public  static String SERVICE_NAME;
+    public static int SERVICE_PRICE;
     public String URL = "https://hs.bigdropinc.net/locations/2/booking";
-    public String serviceListLocator = "//div[contains(@class,'service-content')]//ul//li//a[contains(.,'book now')]";
+    public String serviceListLocator = "//div[contains(@class,'service-content')]//ul//li//";
+    public String serviceListOnlyBookNowBtns = serviceListLocator + "a[contains(.,'book now')]";
+    public String randomServiceLocator;
     private ProgressBarBlock progressBarBlock;
-    private String chosenService;
+    private WebElement chosenService;
+
 
     public void setChosenService() throws Exception {
-        this.chosenService = getRandomService().toString();
+        this.chosenService = getRandomService();
     }
 
-    public String getChosenService() {
+    public WebElement getChosenService() {
         return chosenService;
     }
 
@@ -52,84 +61,68 @@ public class BookingPage extends BasePage {
         System.out.println("Procedure chosen");
     }
 
+    public  boolean isMassageListActive(){ //verify if the list of services appear
+        WebElement massageType = driver.findElement(By.xpath("//ul[contains(@class,'services-list')]"));
+        if (massageType.getAttribute("class").contains("active")) {System.out.println("Massage list is visible");}
+        else {
+            return false;
+        }
+        return true;
+    }
+
     public void chooseService() throws Exception { // TC #3 - Choose the type of massage in the massages list
 
         if (progressBarBlock.verifyTitleOfProgressBar() == true) { // TC #1 - Verify the title of Progress Bar active item
+            WebDriverWait wait = new WebDriverWait(driver, 10);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='booking-details  first-step']")));
+          //  System.out.println(driver.findElement(By.xpath("//div[@class='booking-details  first-step']")).getText());
             chooseMassage();
-            setChosenService();
-            getChosenService();
-            System.out.println("Random index and path is " + getChosenService());
-/*
-            WebElement testItem = driver.findElement(By.xpath(getChosenService()+"//a[contains(@class,'btn-blue')]"));
-            if (testItem.getText().equalsIgnoreCase("book now")){
-
-                WebElement serviceItem = driver.findElement(By.xpath(getChosenService() + "//a[contains(.,'book now')]"));
-                serviceItem.click();*/
-  /*              getServiceName();
-
-                if (serviceItem.getText().equalsIgnoreCase("selected")== true)  {
-
-                    System.out.println("Btn txt on massage type has changed");
-
-                }
-                else System.out.println("Btn txt on massage type has not changed");
-
-            }
-            else{
+            if (isMassageListActive()) {  //setChosenService();
+           // System.out.println("Random index and path is " + getChosenService());
+           // WebElement serviceItem = driver.findElement(By.xpath(getChosenService()));
                 setChosenService();
-  */
+                System.out.println("Random service locator is" + randomServiceLocator);
+                saveServiceName(chosenService);
+                System.out.println("Service name " + SERVICE_NAME);
+            getChosenService().click();
+
+          /*  System.out.println("Is Book Now btn Name has changed " + isBookNowBtnNameChanged());
+            System.out.println("Chosen Service name is " + saveServiceName());
+            System.out.println("Chosen Service start price is " + saveServicePrice());*/
+            }
+          //  serviceItem.click();}
+
+            else {System.out.println("MassageList is not active"); }
+
         } else System.out.print("Progress Bar title is not on first step");
     }
 
-  /*  private String getBtnName(){
-        WebElement test = driver.findElement(By.xpath(getChosenService() + "//a[contains(@class,'btn-blue')]"));
-        String s = test.getText().toString();
-        return s;
+    public boolean isBookNowBtnNameChanged(){
+        return getChosenService().getText().equalsIgnoreCase("selected");
     }
 
-    private boolean compareBtnTitle(){
-        return getBtnName().equalsIgnoreCase("book now");
-    }
-*/
-    public static int randomInt(int Min, int Max) {
-        return (int) (Math.random() * (Max - Min)) + Min;
-    }
 
-/*    private String defineService() throws Exception { // finds random service from the Services List
-        String serviceItem;
-        //if (isElementPresent(By.xpath(serviceListLocator))) {
-            List<WebElement> serviceList = driver.findElements(By.xpath(serviceListLocator));
-            serviceItem = (new StringBuilder())
-                    .append(serviceListLocator.toString())
-                    .append("[" + randomInt(1, serviceList.size() + 1) + "]")
-                    .toString();
 
-            System.out.println(serviceItem);
-            return serviceItem;
-            // }
-      //  else throw new Exception("service list not found");
-    }*/
-
-    private String getServiceName() { //gets name of chosen service
-        WebElement serviceNameLocator = driver.findElement(By.xpath(getChosenService() + "//h4"));
-        String serviceName;
-        serviceName = serviceNameLocator.getText();
-        System.out.println("Chosen service name " + serviceName);
-        return serviceName;
+    public String saveServiceName(WebElement chosenService) {
+        //TODO change serviceListLocator to chosenService and get h4
+        WebElement serviceNameLocator = driver.findElement(By.xpath(serviceListLocator + "h4"));
+        SERVICE_NAME = serviceNameLocator.getText();
+        return SERVICE_NAME;
     }
 
-    private void getServicePrice() { // method to find and save initial price
+    public Float saveServicePrice() { // method to find and save initial price
         //TODO compare duration price >= servicePrice, compare endPrice with duration price
-        WebElement sumLocator = driver.findElement(By.xpath(getChosenService() + "//div[contains(@data-price,'89.95')]"));
-        String sumValue = sumLocator.toString();
-        System.out.println(sumValue);
+        WebElement sumLocator = driver.findElement(By.xpath(serviceListLocator + "div[@class='sum ']"));
+        Float serviceStartPrice = Float.parseFloat(sumLocator.getAttribute("data-price"));
+        return serviceStartPrice;
+
 
     }
    public WebElement getRandomService()
     {
-        List<WebElement> serviceList = driver.findElements(By.xpath(serviceListLocator));
+        List<WebElement> serviceList = driver.findElements(By.xpath(serviceListOnlyBookNowBtns));
         int index = ThreadLocalRandom.current().nextInt(1, serviceList.size());
-        String randomServiceLocator = serviceListLocator.replace("li", String.format("li[%s]", index));
+        randomServiceLocator = serviceListOnlyBookNowBtns.replace("li", String.format("li[%s]", index));
         return driver.findElement(By.xpath(randomServiceLocator));
     }
 
